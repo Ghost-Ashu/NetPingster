@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Ping, WHOIS, and DNS</title>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        form {
+            text-align: center;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 18px;
+            transition: border-color 0.3s ease-in-out;
+        }
+
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+
+        h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .info-section {
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            padding: 16px;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+
+        h3 {
+            font-size: 24px;
+            margin-bottom: 12px;
+            color: #007bff;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            font-size: 18px;
+            color: #555;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>NetPingster</h1>
+        <form method="POST" action="/">
+            <label for="url">Enter URL:</label>
+            <input type="text" name="url" id="url" required>
+            <button type="submit">Ping, WHOIS &amp; DNS</button>
+        </form>
+
+        <!-- Display error message if exists -->
+        {% if error_message %}
+        <div class="error">
+            <p>{{ error_message }}</p>
+        </div>
+        {% endif %}
+        
+        <!-- Display results if URL is provided -->
+        {% if url %}
+        <div class="result">
+            <h2>Results for {{ url }}</h2>
+            
+            <!-- Display ping results if available -->
+            {% if ping_result %}
+            <div class="info-section">
+                <h3>Ping Results:</h3>
+                <pre>{{ ping_result }}</pre>
+            </div>
+            {% endif %}
+            
+            <!-- Display WHOIS information or message if not available -->
+            {% if whois_info is string %}
+            <div class="info-section">
+                <h3>WHOIS Information:</h3>
+                <pre>{{ whois_info }}</pre>
+            </div>
+            {% else %}
+            <p>No WHOIS information available for this URL.</p>
+            {% endif %}
+            
+            <!-- Display DNS information if available -->
+            {% if dns_info %}
+            <div class="info-section">
+                <h3>DNS Information:</h3>
+                <pre>{{ dns_info }}</pre>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+        
+    </div>
+</body>
+</html>
